@@ -9,6 +9,7 @@ import com.example.security.JwtAuthenticationEntryPoint;
 import com.example.security.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +31,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
+@ComponentScan(basePackages = {"com.example"})
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -75,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
                 .permitAll()
-                .antMatchers("/persons/").permitAll()
+                .antMatchers("/persons").permitAll()
                 .anyRequest().authenticated();
 // Add a filter to validate the tokens with every request
         httpSecurity.headers().frameOptions().disable();

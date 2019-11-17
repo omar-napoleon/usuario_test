@@ -5,6 +5,7 @@
  */
 package com.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -17,15 +18,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author usuario
  */
-@Entity(name = "PERSONS")
-public class Persons implements Serializable {
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Entity
+public class Person implements Serializable {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -56,9 +57,6 @@ public class Persons implements Serializable {
     @Column(name = "LAST_LOGIN")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLogin;
-    
-    @OneToMany(mappedBy="person")
-    private List<Phones> phones;
 
     public UUID getId() {
         return id;
@@ -124,19 +122,11 @@ public class Persons implements Serializable {
         this.lastLogin = lastLogin;
     }
 
-    public List<Phones> getPhones() {
-        return phones;
-    }
-
-    public void setPhones(List<Phones> phones) {
-        this.phones = phones;
-    }
-
-    public Persons() {
+    public Person() {
     }
 
 
-    public Persons(UUID id, String name, String email, String password, String token, boolean isActive, Date created, Date lastLogin) {
+    public Person(UUID id, String name, String email, String password, String token, boolean isActive, Date created, Date lastLogin) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -159,10 +149,10 @@ public class Persons implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Persons)) {
+        if (!(object instanceof Person)) {
             return false;
         }
-        Persons other = (Persons) object;
+        Person other = (Person) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

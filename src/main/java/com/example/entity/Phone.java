@@ -7,43 +7,33 @@ package com.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
-import javax.persistence.Column;
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author usuario
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Entity(name = "PHONES")
-public class Phones implements Serializable {
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Entity
+public class Phone implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @NotNull
-    @Column(name = "NUMBER")
+     
     private String number;
     
-    @NotNull
-    @Column(name = "CITY_CODE")
     private String cityCode;
     
-    @NotNull
-    @Column(name = "COUNTRY_CODE")
     private String countryCode;
     
-    @JoinColumn(name = "ID_PERSON", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Persons person;
+    private UUID personId;
 
 
     public Integer getId() {
@@ -78,26 +68,34 @@ public class Phones implements Serializable {
         this.countryCode = countryCode;
     }
 
-    public Phones() {
+    public Phone() {
     }
 
-    public Phones(Integer id) {
+    public Phone(Integer id) {
         this.id = id;
     }
 
-    public Phones(Integer id, String number, String cityCode, String countryCode) {
+    public Phone(Integer id, String number, String cityCode, String countryCode) {
         this.id = id;
         this.number = number;
         this.cityCode = cityCode;
         this.countryCode = countryCode;
     }
-
-    public Persons getPerson() {
-        return person;
+    
+    public Phone(Integer id, String number, String cityCode, String countryCode, UUID personId) {
+        this.id = id;
+        this.number = number;
+        this.cityCode = cityCode;
+        this.countryCode = countryCode;
+        this.personId = personId;
     }
 
-    public void setPerson(Persons person) {
-        this.person = person;
+    public UUID getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(UUID person) {
+        this.personId = person;
     }
 
     @Override
@@ -110,10 +108,10 @@ public class Phones implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Phones)) {
+        if (!(object instanceof Phone)) {
             return false;
         }
-        Phones other = (Phones) object;
+        Phone other = (Phone) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

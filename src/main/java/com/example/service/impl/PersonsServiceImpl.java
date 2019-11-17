@@ -5,9 +5,11 @@
  */
 package com.example.service.impl;
 
-import com.example.entity.Persons;
+import com.example.entity.Person;
+import com.example.entity.Phone;
 import com.example.request.PersonRequest;
 import com.example.repository.PersonsRepository;
+import com.example.repository.PhonesRepository;
 import com.example.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,9 @@ public class PersonsServiceImpl implements PersonsService {
     private PersonsRepository personsRepository;
 
     @Autowired
+    private PhonesRepository phonesRepository;
+
+    @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
     /**
@@ -44,8 +49,25 @@ public class PersonsServiceImpl implements PersonsService {
      * @throws Exception
      */
     @Override
-    public Persons addPerson(PersonRequest body) throws Exception {
-        return personsRepository.save(fillObjectEntity(body));
+    public PersonRequest addPerson(PersonRequest body) throws Exception {
+
+        Person person = fillObjectEntityPerson(body);
+
+        personsRepository.save(person);
+
+        List<Phone> phones = body.getPhones();
+
+        phones.forEach(item -> item.setPersonId(person.getId()));
+
+        phonesRepository.saveAll(phones);
+
+        body.setId(person.getId().toString());
+        body.setToken(person.getToken());
+        body.setIsActive(person.getIsActive());
+        body.setCreated(person.getCreated());
+        body.setLastLogin(person.getLastLogin());
+
+        return body;
 
     }
 
@@ -56,17 +78,17 @@ public class PersonsServiceImpl implements PersonsService {
      * @throws Exception
      */
     @Override
-    public Persons getPersonInfoByEmail(String email) throws Exception {
+    public Person getPersonInfoByEmail(String email) throws Exception {
 
-        Persons p = personsRepository.findByEmail(email);
+        Person p = personsRepository.findByEmail(email);
         if (p == null) {
             throw new EmptyResultDataAccessException(0);
         }
         return p;
     }
 
-    private Persons fillObjectEntity(PersonRequest body) throws Exception {
-        Persons p = new Persons();
+    private Person fillObjectEntityPerson(PersonRequest body) throws Exception {
+        Person p = new Person();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         UserDetails userDetails = new User(body.getEmail(), body.getPassword(), authorities);
@@ -79,7 +101,6 @@ public class PersonsServiceImpl implements PersonsService {
         p.setCreated(new Date());
         p.setLastLogin(new Date());
         p.setToken(token);
-        p.setPhones(body.getPhones());
 
         return p;
     }

@@ -5,7 +5,7 @@
  */
 package com.example.service.impl;
 
-import com.example.entity.Persons;
+import com.example.entity.Person;
 import com.example.repository.PersonsRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         
-       Persons p = personsRepository.findByEmail(email);
+       Person p = personsRepository.findByEmail(email);
         
         if (p != null) {
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();

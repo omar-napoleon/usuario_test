@@ -19,7 +19,7 @@ crea una nueva persona
 ```
 •GET http://localhost:8080/persons/{email} 
 ``` 
-Devuelve los datos de la persona si existe
+Devuelve los datos de la persona si existe(se debe utilizar el token generado en metodo de creación, colocando el valor en el header en el campo authorization)
 
 
 

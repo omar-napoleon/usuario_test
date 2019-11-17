@@ -6,7 +6,7 @@
 package com.example.service;
 
 import com.example.request.PersonRequest;
-import com.example.entity.Persons;
+import com.example.entity.Person;
 
 /**
  *
@@ -14,8 +14,8 @@ import com.example.entity.Persons;
  */
 public interface PersonsService {
 
-    public Persons getPersonInfoByEmail(String email) throws Exception;
+    public Person getPersonInfoByEmail(String email) throws Exception;
     
-    public Persons addPerson(PersonRequest body) throws Exception;
+    public PersonRequest addPerson(PersonRequest body) throws Exception;
 
 }

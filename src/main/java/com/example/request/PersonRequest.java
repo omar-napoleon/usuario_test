@@ -5,7 +5,7 @@
  */
 package com.example.request;
 
-import com.example.entity.Phones;
+import com.example.entity.Phone;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.util.Date;
@@ -43,7 +43,7 @@ public class PersonRequest implements Serializable {
     private Date lastLogin;
     
     @NotEmpty
-    private List<Phones> phones = null;
+    private List<Phone> phones = null;
 
     public String getId() {
         return id;
@@ -109,11 +109,11 @@ public class PersonRequest implements Serializable {
         this.lastLogin = lastLogin;
     }
 
-    public List<Phones> getPhones() {
+    public List<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhones(List<Phones> phones) {
+    public void setPhones(List<Phone> phones) {
         this.phones = phones;
     }
 
