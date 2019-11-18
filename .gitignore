@@ -1,10 +1,19 @@
+
+
+### MAVEN ###
 .mvn/
 mvnw.cmd
 mvnw
-.idea/
 applications/
 target/
 logs/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+
+### STS ###
 *.log
 *#
 *.iml
@@ -16,6 +25,7 @@ logs/
 .#*
 .*.md.html
 .DS_Store
+.apt_generated
 .classpath
 .factorypath
 .gradle
@@ -25,7 +35,12 @@ logs/
 .recommenders
 .settings
 .springBeans
-/build
+.sts4-cache
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+
 /code
 MANIFEST.MF
 _site/
@@ -49,3 +64,18 @@ transaction-logs
 
 *.class
 /nbproject/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Gradle ###
+# Exclude Folder List #
+.gradle/
+build/
